@@ -1,21 +1,24 @@
-import getSubscription from '../utils/getSubscription.js';
+import {createSubscription} from '../utils/subscriber.js';
 
-export default function subscribe(input, state, output, services) {
-	let streamlinkSubscription;
-	const subscription = getSubscription(input.topic,
-		function(resolve, reject) {
-			streamlinkSubscription = services.streamlink.subscribe(input.topic, function(data) {
-				for(var key in data) {
-					state.set(input.topic + '.' + key, data[key]);
-				}
-				resolve();
-			});
-		},
-		function(resolve, reject) {
-			streamlinkSubscription.close();
-			resolve();
-		}
-	);
+export default function subscribe(controller) {
+	return function subscribe(input, state, output, services) {
+		createSubscription(input.topic, output, function(subscription) {
+			let streamlinkSubscription;
 
-	return subscription.increment();
-}
+			subscription.onCreate = function() {
+				streamlinkSubscription = services.streamlink.subscribe(input.topic, function(data) {
+					subscription.output({data: data});
+				});
+			};
+
+			subscription.onEmit = function(data) {
+				data.topic = input.topic;
+				controller.signals.priceUpdate(data);
+			};
+
+			subscription.onDestroy = function() {
+				streamlinkSubscription.close();
+			};
+		});
+	};
+};
