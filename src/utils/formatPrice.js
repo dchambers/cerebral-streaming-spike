@@ -1,1 +1,1 @@
-export default (price) => (price === null) ? '-' : price;
+export default (price) => (!price) ? '-' : price.toPrecision(5);

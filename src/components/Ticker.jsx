@@ -7,18 +7,24 @@ class Ticker extends React.Component {
   render() {
     let prices, button;
     if(!this.props.subscribed) {
-			prices = <span/>;
-      button = <button onClick={() => this.props.signals.subscribe({topic:this.props.instrument, instance:this.props.instance})}>Subscribe</button>;
+			prices = <span>- / -</span>;
+      button = <button className="btn btn-sm btn-success"
+				onClick={() => this.props.signals.subscribe({topic:this.props.instrument, instance:this.props.instance})}>Subscribe</button>;
     }
     else {
 			prices = <span><span className="bid">{formatPrice(this.props.bid)}</span> / <span className="ask">{formatPrice(this.props.ask)}</span></span>;
-      button = <button onClick={() => this.props.signals.unsubscribe({topic:this.props.instrument, instance:this.props.instance})}>Unsubscribe</button>;
+      button = <button className="btn btn-sm btn-danger"
+				onClick={() => this.props.signals.unsubscribe({topic:this.props.instrument, instance:this.props.instance})}>Unsubscribe</button>;
     }
 
     return (
-      <div>
-        <div>{this.props.name}: {prices}</div>
-        {button}
+			<div className="panel panel-default">
+        <div className="panel-heading">
+          <h3 className="panel-title">{this.props.name} {button}</h3>
+        </div>
+        <div className="panel-body">
+					{prices}
+        </div>
       </div>
     );
   }
