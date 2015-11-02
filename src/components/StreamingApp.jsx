@@ -6,8 +6,10 @@ class StreamingApp extends React.Component {
   render() {
     return (
       <div>
-        <Ticker instrument="acme"/>
-        <Ticker instrument="xeta"/>
+        <Ticker instrument="acme" instance="primary"/>
+        <Ticker instrument="acme" instance="secondary"/>
+        <Ticker instrument="xeta" instance="primary"/>
+        <Ticker instrument="xeta" instance="secondary"/>
       </div>
     );
   }
