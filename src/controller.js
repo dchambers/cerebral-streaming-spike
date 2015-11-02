@@ -8,8 +8,8 @@ import MockStreamlink from './services/MockStreamlink.js';
 
 const model = Model({
 	'acme.name': 'Acme Corp',
-  'acme.bid': '-',
-	'acme.ask': '-'
+  'acme.bid': null,
+	'acme.ask': null
 });
 
 const services = {
