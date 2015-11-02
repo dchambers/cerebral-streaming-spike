@@ -20,6 +20,10 @@ class Subscription {
 		if(--this._count === 0) {
 			this.onDestroy();
 			delete subscriptions[this._identifier];
+			return true;
+		}
+		else {
+			return false;
 		}
 	}
 
