@@ -3,7 +3,7 @@ import {Container} from 'cerebral-react';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import StreamingApp from './StreamingApp.jsx';
+import StreamingApp from './components/StreamingApp.jsx';
 
 ReactDOM.render(
   <Container controller={controller}>

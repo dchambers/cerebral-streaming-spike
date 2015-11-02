@@ -4,7 +4,7 @@ function getRandomArbitrary(min, max) {
 
 export default class MockStreamlink {
 	subscribe(topic, callback) {
-		let midPrice = 57.32;
+		let midPrice = (topic == 'acme') ? 57.32 : 21.48;
 
 		return setInterval(function() {
 			midPrice = midPrice + getRandomArbitrary(-0.01, 0.01);
