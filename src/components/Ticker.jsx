@@ -8,12 +8,12 @@ class Ticker extends React.Component {
     let prices, button;
     if(!this.props.subscribed) {
 			prices = <span>- / -</span>;
-      button = <button className="btn btn-sm btn-success"
+      button = <button className="btn btn-sm btn-success" disabled={this.props.loading}
 				onClick={() => this.props.signals.subscribe({topic:this.props.instrument, instance:this.props.instance})}>Subscribe</button>;
     }
     else {
 			prices = <span><span className="bid">{formatPrice(this.props.bid)}</span> / <span className="ask">{formatPrice(this.props.ask)}</span></span>;
-      button = <button className="btn btn-sm btn-danger"
+      button = <button className="btn btn-sm btn-danger" disabled={this.props.loading}
 				onClick={() => this.props.signals.unsubscribe({topic:this.props.instrument, instance:this.props.instance})}>Unsubscribe</button>;
     }
 
@@ -34,6 +34,7 @@ Ticker = HOC(Ticker, function(props) {
 	  name: [props.instrument + '.name'],
 	  bid: [props.instrument + '.bid'],
 	  ask: [props.instrument + '.ask'],
+    loading: [props.instrument + '.loading'],
 		subscribed: [props.instrument + '.subscribers.' + props.instance],
 	};
 });
