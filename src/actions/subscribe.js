@@ -3,10 +3,10 @@ import {createSubscription} from '../utils/subscriber.js';
 export default function subscribe(controller) {
 	return function subscribe(input, state, output, services) {
 		createSubscription(input.topic, output, function(subscription) {
-			let streamlinkSubscription;
+			let subscriptionId;
 
 			subscription.onCreate = function() {
-				streamlinkSubscription = services.streamlink.subscribe(input.topic, function(data) {
+				subscriptionId = services.streamlink.subscribe(input.topic, function(data) {
 					subscription.output({data: data});
 				});
 			};
@@ -17,7 +17,7 @@ export default function subscribe(controller) {
 			};
 
 			subscription.onDestroy = function() {
-				streamlinkSubscription.close();
+				services.streamlink.unsubscribe(subscriptionId);
 			};
 		});
 	};

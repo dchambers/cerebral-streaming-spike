@@ -8,10 +8,18 @@ import {Decorator as Cerebral} from 'cerebral-react';
 })
 class StreamingApp extends React.Component {
   render() {
+    let button;
+    if(this.props.bid == '-') {
+      button = <button onClick={() => this.props.signals.subscribe({topic:'acme'})}>Subscribe</button>;
+    }
+    else {
+      button = <button onClick={() => this.props.signals.unsubscribe({topic:'acme'})}>Unsubscribe</button>;
+    }
+
     return (
       <div>
         <div>{this.props.name}: <span className="bid">{this.props.bid}</span> / <span className="ask">{this.props.ask}</span></div>
-        <button onClick={() => this.props.signals.subscribe({topic:'acme'})}>Subscribe</button>
+        {button}
       </div>
     );
   }

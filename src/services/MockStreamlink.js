@@ -15,7 +15,7 @@ export default class MockStreamlink {
 		}, 200);
 	}
 
-	close(subscription) {
-		clearInterval(subscription);
+	unsubscribe(subscriptionId) {
+		clearInterval(subscriptionId);
 	}
 }
