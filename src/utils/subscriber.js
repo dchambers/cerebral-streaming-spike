@@ -7,6 +7,8 @@ class Subscription {
 		this._output = output;
 		this._setup = setup;
 
+		this._logSubscriberInfo();
+
 		setup(this);
 		this.onCreate();
 	}
@@ -14,15 +16,18 @@ class Subscription {
 	addSubscriber(output) {
 		this._count++;
 		output(this._lastData);
+		this._logSubscriberInfo();
 	}
 
 	removeSubscriber() {
 		if(--this._count === 0) {
 			this.onDestroy();
 			delete subscriptions[this._identifier];
+			this._logSubscriberInfo();
 			return true;
 		}
 		else {
+			this._logSubscriberInfo();
 			return false;
 		}
 	}
@@ -36,6 +41,10 @@ class Subscription {
 		else {
 			this.onEmit(data);
 		}
+	}
+
+	_logSubscriberInfo() {
+		console.log(this._identifier + ' subscribers: ' + this._count);
 	}
 }
 
